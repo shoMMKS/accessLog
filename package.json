@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node index.js",
-    "start:sample": "babel-node sample.js"
+    "start:lab": "babel-node lab.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",

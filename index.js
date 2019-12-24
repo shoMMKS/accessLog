@@ -16,10 +16,10 @@ const monthObject = {
   'Dec': 11,
 }
 
-const displayFile = async () => {
+const displayFile = async (startNumber, startDate = new Date(0), endDate = new Date()) => {
   const hostObject = {}
   const hoursObject = {}
-  for (let i = 2; i < process.argv.length; i++) {
+  for (let i = startNumber; i < process.argv.length; i++) {
     const stream = fs.createReadStream(process.argv[i], 'utf8')
     const reader = readline.createInterface({ input: stream })
 
@@ -29,8 +29,10 @@ const displayFile = async () => {
       const dateArray = array[3].replace('[', '').split(/\/|:/)
       const time = new Date(dateArray[2], monthObject[dateArray[1]], dateArray[0], dateArray[3], dateArray[4], dateArray[5])
       const hour = time.getHours()
-      hostObject[host] = hostObject[host] ? hostObject[host] + 1 : 1
-      hoursObject[hour] = hoursObject[hour] ? hoursObject[hour] + 1 : 1
+      if (startDate <= time && time <= endDate) {
+        hostObject[host] = hostObject[host] ? hostObject[host] + 1 : 1
+        hoursObject[hour] = hoursObject[hour] ? hoursObject[hour] + 1 : 1
+      }
     }
   }
   console.log('- リモートホスト別のアクセス件数 -')
@@ -43,9 +45,20 @@ const displayFile = async () => {
   })
 }
 
-if (process.argv.length > 2) {
-  displayFile()
+if (process.argv[2] === '-t') {
+  const startDate = new Date(process.argv[3])
+  const endDate = new Date(process.argv[4])
+  if ((startDate.toString() !== "Invalid Date") && (endDate.toString() !== "Invalid Date")) {
+    displayFile(5, startDate, endDate)
+  } else {
+    console.log('Error: Invalid Date.')
+  }
+}else if (process.argv.length > 2) {
+  displayFile(2)
 } else {
-  console.log('Usage: node index.js [fileNames]')
-  console.log('Example: node index.js sample1.txt sample2.txt sample3.txt')
+  console.log('Usage: node index.js [options] [fileNames]')
+  console.log('Options:')
+  console.log('-t [dateString] [dateString]: Retrieve logs for a specified period.')
+  console.log('Example1: node index.js sample1.txt sample2.txt sample3.txt')
+  console.log('Example2: node index.js -t 2017/04/01 2017/04/30 sample4.txt sample5.txt')
 }

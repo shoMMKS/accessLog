@@ -7,7 +7,7 @@ Apacheのアクセスログファイルを読み込み、以下の観点でア�
 Node    v10.0.0
 
 ## Usage
-node index.js [-h `<dateString>` `<dateString>`] [fileName]...
+node index.js [-h `<dateString>` `<dateString>`] [file ...]
 
 command sample: 
 ```sh

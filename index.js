@@ -56,9 +56,9 @@ if (process.argv[2] === '-t') {
 }else if (process.argv.length > 2) {
   displayFile(2)
 } else {
-  console.log('Usage: node index.js [options] [fileNames]')
+  console.log('Usage: node index.js [options] [file ...]')
   console.log('Options:')
-  console.log('-t [dateString] [dateString]: Retrieve logs for a specified period.')
+  console.log('-t <dateString> <dateString>: Retrieve logs for a specified period.')
   console.log('Example1: node index.js sample1.txt sample2.txt sample3.txt')
   console.log('Example2: node index.js -t 2017/04/01 2017/04/30 sample4.txt sample5.txt')
 }
